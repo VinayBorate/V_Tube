@@ -1,10 +1,11 @@
 import React from 'react'
 import TemplateLoginSignup from './TemplateLoginSignup'
 
-const Signup = () => {
+const Signup = ({ setisLogin}) => {
   return (
     <TemplateLoginSignup
       formtype="signup"
+      setisLogin={setisLogin}
     />
   )
 }

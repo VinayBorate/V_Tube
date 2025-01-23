@@ -4,10 +4,11 @@ import Lottie from "lottie-react";
 import walk from '../assets/walk.json'
 import TemplateLoginSignup from './TemplateLoginSignup';
 
-const Login = () => {
+const Login = ({setisLogin}) => {
   return (
       <TemplateLoginSignup
         formtype="login"
+        setisLogin={setisLogin}
       />
   )
 }

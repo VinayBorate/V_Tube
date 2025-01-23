@@ -8,16 +8,16 @@ import Dashboard from './pages/Dashboard'
 
 function App() {
 
-  const[isLogin,setisLogin] = useState(true);
+  const[isLogin,setisLogin] = useState(false);
 
   return (
-    <div>
+    <div className=' bg-slate-950 w-screen min-h-screen flex flex-col'>
       <Navebar isLogin={isLogin} setisLogin={setisLogin}/>
 
       <Routes>
         <Route path='/' element={<Home/>}/>
-        <Route path='/login' element={<Login/>}/>
-        <Route path='/signup' element={<Signup/>} />
+        <Route path='/login' element={<Login setisLogin={setisLogin}/>}/>
+        <Route path='/signup' element={<Signup setisLogin={setisLogin}/>} />
         <Route path='/dashboard' element={<Dashboard/>} />
       </Routes>
     </div>
