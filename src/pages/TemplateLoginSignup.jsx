@@ -7,7 +7,7 @@ import { LoginForm } from '../components/LoginForm';
 import { FcGoogle } from "react-icons/fc";
 
 
-const TemplateLoginSignup = ({formtype,setisLogin}) => {
+const TemplateLoginSignup = ({formtype,setisLogin,setsearchBar}) => {
   return (
     <div className='flex-row py-12 sm:flex sm:items-center sm:justify-center sm:py-12 sm:max-auto sm:gap-12 sm:gap-y-0 '>
 
