@@ -5,6 +5,7 @@ import Home from './pages/Home'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import Dashboard from './pages/Dashboard'
+import Privateroute from './components/Privateroute'
 
 function App() {
 
@@ -12,6 +13,8 @@ function App() {
 
   // helps to get the current path of the url
   const currentPath = useLocation();
+
+  
 
 
   return (
@@ -22,7 +25,11 @@ function App() {
         <Route path='/' element={<Home/>}/>
         <Route path='/login' element={<Login setisLogin={setisLogin}/>}/>
         <Route path='/signup' element={<Signup setisLogin={setisLogin}/>} />
-        <Route path='/dashboard' element={<Dashboard/>} />
+        <Route path='/dashboard' element={
+          <Privateroute isLogin={isLogin}>
+            <Dashboard/>
+          </Privateroute>
+        } />
       </Routes>
     </div>
     

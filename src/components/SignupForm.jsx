@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 const SignupForm = ({setisLogin}) => {
 
     const[showPassword,setshowPassword] = useState(false);
+    const[showConfrmPassword,setshowConfrmPassword] = useState(false);
 
     const navigate = useNavigate();
 
@@ -125,15 +126,15 @@ const SignupForm = ({setisLogin}) => {
                        
                    <input
                     required
-                    type={showPassword ? ('text') : ('password')}
+                    type={showConfrmPassword ? ('text') : ('password')}
                     name='confirmPassword'
                     onChange={changeHandler}
                     placeholder='Confirm Password'
                     value={formData.confirmPassword}
                     className="bg-slate-800 rounded-[0.75rem] w-full p-[12px] text-gray-100"
                   />
-                        <span onClick={()=>setshowPassword( (prev)=> !prev )} className='absolute right-3 top-[38px] cursor-pointer'>
-                                  {showPassword ? (<AiOutlineEyeInvisible fontSize={24} fill='#AFB2BF'/>) : (<AiOutlineEye fontSize={24} fill='#AFB2BF'/>)}
+                        <span onClick={()=>setshowConfrmPassword( (prev)=> !prev )} className='absolute right-3 top-[38px] cursor-pointer'>
+                                  {showConfrmPassword ? (<AiOutlineEyeInvisible fontSize={24} fill='#AFB2BF'/>) : (<AiOutlineEye fontSize={24} fill='#AFB2BF'/>)}
                         </span>
                  </label>
             

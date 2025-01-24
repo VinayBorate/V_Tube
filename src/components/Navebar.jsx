@@ -97,7 +97,7 @@ const Navebar = (props) => {
       )}
     </form>
 
-     {/* Options */}
+     {/*------------------------------------- Options -----------------------------------*/}
 
       <nav>
                  {/* Hamburder Button */}
