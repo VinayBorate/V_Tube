@@ -1,8 +1,11 @@
-# React + Vite
+# Navigate Hook
+  const navigate = useNavigate(); -- > helps to navigate from one page to another 
+  const navigate = useNavigate();
+  navigate("/dashboard");
+     or 
+    <Navigate to="/dashboard">
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# location
 
-Currently, two official plugins are available:
+# loitee
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh

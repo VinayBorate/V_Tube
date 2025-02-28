@@ -26,12 +26,50 @@ export const LoginForm = ({setisLogin}) => {
     
     }
 
-    function submitHandler(event){
-         event.preventDefault();
-         setisLogin(true);
-         toast.success("Logged In");
-         navigate("/dashboard");
+    // function submitHandler(event){
+    //      event.preventDefault();
+    //      setisLogin(true);
+    //      toast.success("Logged In");
+    //      console.log(formData);
+    //      navigate("/dashboard");
+    // }
+
+    async function submitHandler(event) {
+        event.preventDefault(); // Prevents page reload
+        console.log(formData)
+        try {
+            const response = await fetch('http://localhost:3000/api/v1/auth/user/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                
+                body: JSON.stringify(formData), // to convert the Javaccript onject to JSON formate
+                credentials: 'include' // Allows cookies to be sent for authentication
+            });
+             
+            const data = await response.json();
+            console.log(data);
+    
+            if (response.ok) {
+                toast.success("Logged In Successfully");
+                setisLogin(true);
+    
+                // Store token in localStorage
+                if (data.token) {
+                    localStorage.setItem('authToken', data.token);
+                }
+    
+                navigate('/dashboard'); // Redirect to dashboard
+            } else {
+                toast.error(data.message || "Login Failed");
+            }
+        } catch (error) {
+            console.error("Error during login:", error);
+            toast.error("Something went wrong. Please try again.");
+        }
     }
+    
 
   return (
     <form onSubmit={submitHandler}

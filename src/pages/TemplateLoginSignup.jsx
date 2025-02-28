@@ -15,7 +15,7 @@ const TemplateLoginSignup = ({formtype,setisLogin,setsearchBar}) => {
         <div className='mx-8'>
 
             <div>
-                  { formtype == "signup" ? 
+                  { formtype === "signup" ? 
                   (<h1 className='text-white font-semibold text-[1.875rem] leading-[2.375rem]'>Welcome To Signup Page</h1>):
                   (<h1 className='text-white font-semibold text-[1.875rem] leading-[2.375rem]'>Welcome To Login Page</h1>)
                    }

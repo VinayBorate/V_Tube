@@ -14,8 +14,8 @@ const Navebar = (props) => {
 
         // getting the current location or path
         const currentPath = props.currentPath;
-        console.log(currentPath.pathname);
-        const hideSearchPaths = ['/login', '/signup'];
+        // console.log(currentPath.pathname);
+        const hideSearchPaths = ['/login', '/signup' ,'/dashboard'];
 
   
       const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -43,7 +43,7 @@ const Navebar = (props) => {
 
 
   return (
-    <div className="dark:bg-gray-900 sm:flex sm:justify-between sm:items-center w-full py-1 sm:mx-auto">
+    <div className="dark:bg-gray-900 sm:flex sm:justify-between sm:items-center w-full py-1 sm:mx-auto sm:py-4">
 
     {/*------------------------------- Logo ----------------------------------------------------*/}
       <Link to="/">
@@ -165,7 +165,8 @@ const Navebar = (props) => {
                  <Link 
                    to='/login' 
                    onClick={()=>{
-                    setisLogin(false);
+                    localStorage.removeItem("authToken");  // Remove token
+                    setisLogin(false);  // Update UI state
                     notify();
                    }}>
                    Logout
