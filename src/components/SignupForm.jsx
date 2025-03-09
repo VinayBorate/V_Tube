@@ -9,8 +9,8 @@ const SignupForm = ({ setisLogin }) => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    firstName: '', // ✅ Changed to match backend key
-    lastName: '', // ✅ Changed to match backend key
+    firstName: '', 
+    lastName: '', 
     email: '',
     createPassword: '',
     confirmPassword: ''
@@ -36,7 +36,6 @@ const SignupForm = ({ setisLogin }) => {
     }
 
     try {
-      // ✅ Sending entire formData (not just email) to OTP page
       const otpResponse = await fetch('http://localhost:3000/api/v1/auth/user/sendOTP', {
         method: 'POST',
         headers: {
@@ -54,7 +53,7 @@ const SignupForm = ({ setisLogin }) => {
         return;
       }
 
-      // ✅ Navigate to OTP page with correct form data
+      // Navigate to OTP page with correct form data
       navigate('/otpverify', { state: formData });
     } catch (error) {
       console.error('OTP request failed:', error);
@@ -75,7 +74,7 @@ const SignupForm = ({ setisLogin }) => {
         <input
           required
           type="text"
-          name="firstName" // ✅ Changed to match backend key
+          name="firstName"
           onChange={changeHandler}
           placeholder="Enter First Name"
           value={formData.firstName}
@@ -90,7 +89,7 @@ const SignupForm = ({ setisLogin }) => {
         <input
           required
           type="text"
-          name="lastName" // ✅ Changed to match backend key
+          name="lastName" 
           onChange={changeHandler}
           placeholder="Enter Last Name"
           value={formData.lastName}

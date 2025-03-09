@@ -50,7 +50,7 @@ const Home = () => {
               <div className="w-6 h-6 rounded-full bg-gray-200 mr-2"></div>
               <div>
                 {/* Replace with actual channel name */}
-                <p className="text-xs text-gray-700">Channel Name</p>
+                <p className="text-xs text-gray-700">{video.adminEmail}</p>
                 <p className="text-xs text-gray-500">10K views • 1 day ago</p> {/* Replace with actual view count and upload date */}
               </div>
             </div>

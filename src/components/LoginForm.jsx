@@ -49,6 +49,7 @@ export const LoginForm = ({setisLogin}) => {
             });
              
             const data = await response.json();
+            console.log("This is My data after Login");
             console.log(data);
     
             if (response.ok) {
@@ -58,6 +59,7 @@ export const LoginForm = ({setisLogin}) => {
                 // Store token in localStorage
                 if (data.token) {
                     localStorage.setItem('authToken', data.token);
+                    localStorage.setItem('userDetail', JSON.stringify(data.user));
                 }
     
                 navigate('/dashboard'); // Redirect to dashboard
