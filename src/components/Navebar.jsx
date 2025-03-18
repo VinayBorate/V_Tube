@@ -51,8 +51,8 @@ const Navbar = (props) => {
       try {
         const userData = JSON.parse(storedUser); // Parse it into an object
         setmyData(userData); // Set the user data to state
-        console.log("This is the Normal user data:", userData);
-        console.log("First Name:", userData.firstName); // Now it works
+        //console.log("This is the Normal user data:", userData);
+        //console.log("First Name:", userData.firstName); // Now it works
       } catch (error) {
         console.error("Error parsing user data:", error);
       }
