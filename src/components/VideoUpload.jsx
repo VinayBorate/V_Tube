@@ -10,12 +10,15 @@ const VideoUpload = ({ adminData }) => {
   const [adminEmail, setAdminEmail] = useState(""); // Initialize as empty string
   const [videoFile, setVideoFile] = useState(null);
 
+  console.log("This is My admin dAta");
+  console.log(adminData);
+
   // Update adminEmail once adminData is available
-  useEffect(() => {
-    if (adminData?.email) {
-      setAdminEmail(adminData.email);
-    }
-  }, [adminData]); // Runs whenever adminData updates
+  // useEffect(() => {
+  //   if (adminData?.email) {
+  //     setAdminEmail(adminData.email);
+  //   }
+  // }, [adminData]); // Runs whenever adminData updates
 
   const openModal = () => {
     setModalVisible(true);
@@ -43,8 +46,9 @@ const VideoUpload = ({ adminData }) => {
     const formData = new FormData();
     formData.append("videoTitle", videoTitle);
     formData.append("description", description);
-    formData.append("adminEmail", adminEmail); 
+    formData.append("adminEmail", adminData.email); 
     formData.append("videoFile", videoFile);
+    formData.append("adminPic",adminData.image);
 
     try {
       const response = await fetch(
@@ -136,7 +140,7 @@ const VideoUpload = ({ adminData }) => {
                           />
                         </div>
                         <div className="mb-4 w-full">
-                          <label
+                          {/* <label
                             htmlFor="adminEmail"
                             className="block text-[0.875rem] text-gray-100 mb-1 leading-[1.375rem]"
                           >
@@ -148,7 +152,7 @@ const VideoUpload = ({ adminData }) => {
                             className="bg-slate-800 rounded-[0.75rem] w-full p-[12px] text-gray-400 cursor-not-allowed"
                             value={adminEmail} // Corrected to use updated state
                             readOnly // Prevents user from editing
-                          />
+                          /> */}
                         </div>
                         <div className="mb-6 w-full">
                           <label
