@@ -36,7 +36,7 @@ const Home = () => {
           <div className="relative">
             <video
               width="100%"
-              height="auto"
+              height="100%"
               controls
               muted
               className="block w-full"

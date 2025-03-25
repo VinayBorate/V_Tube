@@ -7,6 +7,7 @@ import Signup from './pages/Signup'
 import Dashboard from './pages/Dashboard'
 import Privateroute from './components/Privateroute'
 import OTPpage from './pages/OTPpage'
+import PaymentComponent from './pages/Payments'
 
 function App() {
 
@@ -46,6 +47,13 @@ function App() {
             <Dashboard/>
           </Privateroute>
         } />
+        <Route path='/payment' element={
+          <Privateroute isLogin={isLogin}>
+            <PaymentComponent/>
+          </Privateroute>
+        } />
+
+        
       </Routes>
     </div>
     
