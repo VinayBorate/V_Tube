@@ -49,8 +49,8 @@ export const LoginForm = ({setisLogin}) => {
             });
              
             const data = await response.json();
-            console.log("This is My data after Login");
-            console.log(data);
+            
+            console.log("This is My data after Login",data);
     
             if (response.ok) {
                 toast.success("Logged In Successfully");
