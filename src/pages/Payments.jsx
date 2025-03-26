@@ -1,4 +1,8 @@
 import React, { useState, useEffect } from "react";
+import Lottie from "lottie-react";
+import goldcoin from "../assets/goldplan.json";
+import silvercoine from "../assets/silverplan.json";
+import bronzecoine from "../assets/bronzeplan.json";
 
 const PaymentPage = () => {
   const [adminData, setAdminData] = useState(null);
@@ -100,6 +104,15 @@ const PaymentPage = () => {
 const PlanCard = ({ planName, price, features, onClick }) => (
   <div className="mb-10 overflow-hidden rounded-lg bg-gray-700 shadow-lg duration-300 hover:shadow-xl">
     <div className="p-8 text-center">
+      <div>
+        {planName === "gold" ? (
+          <Lottie animationData={goldcoin} />
+        ) : planName === "silver" ? (
+          <Lottie animationData={silvercoine} />
+        ) : (
+          <Lottie animationData={bronzecoine} />
+        )}
+      </div>
       <h3 className="mb-4 text-xl font-semibold">{planName}</h3>
       <p className="mb-2 text-base leading-relaxed">{price}</p>
       <ul className="text-sm mb-4">
