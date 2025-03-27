@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Lottie from "lottie-react";
 import Spinner from "../assets/LoderSpin.json";
 
 const Home = () => {
   const [videos, setVideos] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
+  const videoRefs = useRef({}); // Store references to all video elements
+  const currentVideoRef = useRef(null); // Track currently playing video
 
   useEffect(() => {
     const fetchVideos = async () => {
@@ -19,18 +20,28 @@ const Home = () => {
           setVideos(data.videos);
         } else {
           console.error("Failed to fetch videos:", data.message);
-          // Handle error appropriately (e.g., display an error message to the user)
         }
       } catch (error) {
         console.error("Error fetching videos:", error);
-        // Handle network errors or other exceptions
-      }  finally {
-        setIsLoading(false); // Stop loading when data is fetched
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchVideos();
   }, []);
+
+  const handleVideoPlay = (videoId) => {
+    const videoElement = videoRefs.current[videoId];
+    
+    // Pause currently playing video if it exists
+    if (currentVideoRef.current && currentVideoRef.current !== videoElement) {
+      currentVideoRef.current.pause();
+    }
+    
+    // Update current video reference
+    currentVideoRef.current = videoElement;
+  };
 
   return isLoading ? (
     <div className="flex items-center justify-center h-screen">
@@ -45,17 +56,26 @@ const Home = () => {
         >
           <div className="relative">
             <video
+              ref={(el) => (videoRefs.current[video._id] = el)} // Store reference
               width="100%"
               height="100%"
               controls
               muted
               className="block w-full"
+              onPlay={() => handleVideoPlay(video._id)}
+              onPause={() => {
+                if (currentVideoRef.current === videoRefs.current[video._id]) {
+                  currentVideoRef.current = null;
+                }
+              }}
             >
               <source src={video.videoURL} type="video/mp4" />
               Your browser does not support the video tag.
             </video>
           </div>
-  
+
+          {/*  video card content */}
+
           <div className="p-4">
             <h3 className="text-lg font-semibold text-gray-50 line-clamp-2">
               {video.videoTitle}
@@ -81,8 +101,7 @@ const Home = () => {
       ))}
     </div>
   );
-  
-
-  };
+};
 
 export default Home;
+

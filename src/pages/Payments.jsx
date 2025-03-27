@@ -84,13 +84,14 @@ const PaymentPage = () => {
   };
 
   return (
-    <section className="bg-red-500 text-white p-6">
+    <section className=" text-white p-6">
       <h1 className="text-3xl font-bold mb-4">Select a Plan</h1>
       <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
         {plans.map((plan) => (
           <PlanCard
             key={plan._id}
             planName={plan.name}
+            plantitle={plan.plantitle}
             price={`₹${plan.amount}`}
             features={plan.features}
             onClick={(e) => handlePayment(plan.name.toLowerCase(), plan.amount, e)}
@@ -101,7 +102,7 @@ const PaymentPage = () => {
   );
 };
 
-const PlanCard = ({ planName, price, features, onClick }) => (
+const PlanCard = ({ planName, plantitle, price, features, onClick }) => (
   <div className="mb-10 overflow-hidden rounded-lg bg-gray-700 shadow-lg duration-300 hover:shadow-xl">
     <div className="p-8 text-center">
       <div>
@@ -113,7 +114,7 @@ const PlanCard = ({ planName, price, features, onClick }) => (
           <Lottie animationData={bronzecoine} />
         )}
       </div>
-      <h3 className="mb-4 text-xl font-semibold">{planName}</h3>
+      <h3 className="mb-4 text-xl font-semibold">{plantitle}</h3>
       <p className="mb-2 text-base leading-relaxed">{price}</p>
       <ul className="text-sm mb-4">
         {features.map((feature, index) => (
@@ -124,7 +125,7 @@ const PlanCard = ({ planName, price, features, onClick }) => (
         className="inline-block rounded-full border border-gray-300 px-6 py-2 text-base font-medium text-white transition hover:bg-gray-600"
         onClick={onClick}
       >
-        Select Plan
+        Buy Plan
       </button>
     </div>
   </div>
