@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { MdCloudUpload } from "react-icons/md";
 import FileUploadAnimation from "../assets/FileUploadAnimation";
 import "../assets/FileUploadAnimation.css";
+import Lottie from "lottie-react";
+import UploadSpinner from "../assets/VideoUploadSpinner.json"
 
 const VideoUpload = ({ adminData }) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -9,6 +11,7 @@ const VideoUpload = ({ adminData }) => {
   const [description, setDescription] = useState("");
   const [adminEmail, setAdminEmail] = useState(""); // Initialize as empty string
   const [videoFile, setVideoFile] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   console.log("This is My admin dAta");
   console.log(adminData);
@@ -50,6 +53,8 @@ const VideoUpload = ({ adminData }) => {
     formData.append("videoFile", videoFile);
     formData.append("adminPic",adminData.image);
 
+    setIsLoading(true);
+
     try {
       const response = await fetch(
         "http://localhost:3000/api/v1/auth/user/videoupload",
@@ -67,10 +72,16 @@ const VideoUpload = ({ adminData }) => {
       }
     } catch (error) {
       console.error("Error uploading video:", error);
+    }finally{
+      setIsLoading(false);
     }
   };
 
-  return (
+  return isLoading ? ( 
+    <div className="flex items-center justify-center h-screen">
+      <Lottie animationData={UploadSpinner} className="h-44" />
+    </div>
+  ) : (
     <div className="flex justify-center items-center bg-slate-950">
       <div className="container">
         <div className="folder">

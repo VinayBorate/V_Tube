@@ -1,14 +1,23 @@
-import React from 'react'
+import React, { useState } from 'react'
 // used for the waking Aanimation
 import Lottie from "lottie-react";
 import walk from '../assets/walk.json'
 import SignupForm from '../components/SignupForm';
 import { LoginForm } from '../components/LoginForm';
 import { FcGoogle } from "react-icons/fc";
+import Spinner from "../assets/LoderSpin.json";
+
+
 
 
 const TemplateLoginSignup = ({formtype,setisLogin,setsearchBar}) => {
-  return (
+  const [isLoading, setIsLoading] = useState(false);
+
+  return isLoading ? (
+    <div className="flex items-center justify-center h-screen">
+      <Lottie animationData={Spinner} className="h-44" />
+    </div>
+   ) : (
     <div className='flex-row py-12 sm:flex sm:items-center sm:justify-center sm:py-12 sm:max-auto sm:gap-12 sm:gap-y-0 '>
 
 
@@ -22,7 +31,7 @@ const TemplateLoginSignup = ({formtype,setisLogin,setsearchBar}) => {
             </div>
 
                 {formtype === "signup" ? 
-                 (<SignupForm setisLogin={setisLogin}/>):
+                 (<SignupForm setisLogin={setisLogin}  setIsLoading={setIsLoading}/>):
                  (<LoginForm setisLogin={setisLogin}/>)
                 }
 

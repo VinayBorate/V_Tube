@@ -3,10 +3,12 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 
-const SignupForm = ({ setisLogin }) => {
+
+const SignupForm = ({ setisLogin ,setIsLoading}) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
+  
 
   const [formData, setFormData] = useState({
     firstName: '', 
@@ -35,6 +37,8 @@ const SignupForm = ({ setisLogin }) => {
       return;
     }
 
+    setIsLoading(true); // show the loader while Processing
+
     try {
       const otpResponse = await fetch('http://localhost:3000/api/v1/auth/user/sendOTP', {
         method: 'POST',
@@ -62,6 +66,8 @@ const SignupForm = ({ setisLogin }) => {
         autoClose: 2000,
         theme: 'dark'
       });
+    }finally {
+      setIsLoading(false); // Hide loader after processing
     }
   }
 

@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import Lottie from "lottie-react";
+import Spinner from "../assets/LoderSpin.json";
 
 const OTPpage = ({ setisLogin }) => {
     const [otp, setOtp] = useState(['', '', '', '', '', '']);
@@ -8,6 +10,7 @@ const OTPpage = ({ setisLogin }) => {
     const location = useLocation();
     const navigate = useNavigate();
     const formData = location.state; // Access form data passed from SignupForm
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         if (!formData) {
@@ -54,6 +57,8 @@ const OTPpage = ({ setisLogin }) => {
 
         console.log("Entered OTP:", enteredOtp);
 
+        setIsLoading(true);
+
         try {
             const response = await fetch('http://localhost:3000/api/v1/auth/user/signup', {
                 method: 'POST',
@@ -68,9 +73,20 @@ const OTPpage = ({ setisLogin }) => {
                 localStorage.setItem('authToken', data.token);
                 setisLogin(true); 
 
-                setTimeout(() => {
+                setTimeout(async () => {
+                    try {
+                        await fetch("http://localhost:3000/api/v1/auth/user/logout", {
+                            method: "GET",
+                            credentials: "include",
+                        });
+                    } catch (error) {
+                        console.error("Logout failed:", error);
+                    }
+
+                    setisLogin(false);
                     navigate("/login");
-                }, 2000); // Delay navigation so the user sees the toast
+                }, 2000);
+                 // Delay navigation so the user sees the toast
                 
                 return;  // 🔴 Stops further execution so no error toast appears
             }
@@ -81,10 +97,16 @@ const OTPpage = ({ setisLogin }) => {
         } catch (error) {
             console.error('Error during signup:', error);
             toast.error('An error occurred during signup', { position: "top-center", autoClose: 2000, theme: "dark" });
+        }finally{
+            setIsLoading(false);
         }
-    };
+    }
 
-    return (
+    return isLoading ? (  
+        <div className="flex items-center justify-center h-screen">
+      <Lottie animationData={Spinner} className="h-44" />
+     </div>
+       ) : (
         <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white">
             <div className="bg-gray-800 rounded-lg shadow-xl p-8 w-full max-w-md">
                 <h2 className="text-2xl font-semibold mb-6 text-center">Verify OTP</h2>

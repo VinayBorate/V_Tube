@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
+import Lottie from "lottie-react";
+import Spinner from "../assets/LoderSpin.json";
 
 const Home = () => {
   const [videos, setVideos] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
 
   useEffect(() => {
     const fetchVideos = async () => {
@@ -20,18 +24,24 @@ const Home = () => {
       } catch (error) {
         console.error("Error fetching videos:", error);
         // Handle network errors or other exceptions
+      }  finally {
+        setIsLoading(false); // Stop loading when data is fetched
       }
     };
 
     fetchVideos();
   }, []);
 
-  return (
+  return isLoading ? (
+    <div className="flex items-center justify-center h-screen">
+      <Lottie animationData={Spinner} className="h-44" />
+    </div>
+  ) : (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4">
       {videos.map((video) => (
         <div
           key={video._id}
-          className="rounded-lg shadow-md overflow-hidden bg-slate-900  sm:h-96"
+          className="rounded-lg shadow-md overflow-hidden bg-slate-900 sm:h-96"
         >
           <div className="relative">
             <video
@@ -44,13 +54,8 @@ const Home = () => {
               <source src={video.videoURL} type="video/mp4" />
               Your browser does not support the video tag.
             </video>
-            {/* Optional: Add a timestamp overlay if you have that data
-            <div className="absolute bottom-2 right-2 bg-black bg-opacity-70 text-white text-xs py-1 px-2 rounded">
-              31:18
-            </div>
-            */}
           </div>
-
+  
           <div className="p-4">
             <h3 className="text-lg font-semibold text-gray-50 line-clamp-2">
               {video.videoTitle}
@@ -59,7 +64,6 @@ const Home = () => {
               {video.description}
             </p>
             <div className="flex items-center mt-2 gap-4">
-              {/*  Replace with actual channel logo */}
               <div className="w-8 h-8 rounded-full overflow-hidden bg-gray-200">
                 <img
                   src={video.adminPic}
@@ -68,12 +72,8 @@ const Home = () => {
                 />
               </div>
               <div>
-                {/* Replace with actual channel name */}
                 <p className="text-xs text-gray-700">{video.adminEmail}</p>
-                <p className="text-xs text-gray-500">
-                  10K views • 1 day ago
-                </p>{" "}
-                {/* Replace with actual view count and upload date */}
+                <p className="text-xs text-gray-500">10K views • 1 day ago</p>
               </div>
             </div>
           </div>
@@ -81,6 +81,8 @@ const Home = () => {
       ))}
     </div>
   );
-};
+  
+
+  };
 
 export default Home;
