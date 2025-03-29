@@ -8,6 +8,7 @@ import Dashboard from './pages/Dashboard'
 import Privateroute from './components/Privateroute'
 import OTPpage from './pages/OTPpage'
 import PaymentComponent from './pages/Payments'
+import ViewVideo from './pages/Viewvideos'
 
 function App() {
 
@@ -42,6 +43,7 @@ function App() {
         <Route path='/login' element={<Login setisLogin={setisLogin}/>}/>
         <Route path='/signup' element={<Signup setisLogin={setisLogin}/>} />
         <Route path='/otpverify' element={<OTPpage setisLogin={setisLogin}/>} />
+        <Route path="/video/:videoId" element={<ViewVideo />} />
         <Route path='/dashboard' element={
           <Privateroute isLogin={isLogin}>
             <Dashboard/>

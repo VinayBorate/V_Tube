@@ -12,6 +12,8 @@ const VideoUpload = ({ adminData }) => {
   const [adminEmail, setAdminEmail] = useState(""); // Initialize as empty string
   const [videoFile, setVideoFile] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [thumbnailPic, setThumbnailPic] = useState(null);
+
 
   console.log("This is My admin dAta");
   console.log(adminData);
@@ -37,11 +39,17 @@ const VideoUpload = ({ adminData }) => {
     setDescription("");
     setAdminEmail(adminData?.email || ""); // Reset to original admin email
     setVideoFile(null);
+    setThumbnailPic(null);
   };
 
   const handleFileChange = (e) => {
     setVideoFile(e.target.files[0]);
   };
+
+  const handleThumbnailChange = (e) => {
+    setThumbnailPic(e.target.files[0]);
+};
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -52,6 +60,8 @@ const VideoUpload = ({ adminData }) => {
     formData.append("adminEmail", adminData.email); 
     formData.append("videoFile", videoFile);
     formData.append("adminPic",adminData.image);
+    formData.append("thumbnailPic", thumbnailPic); // Fix the key name
+
 
     setIsLoading(true);
 
@@ -150,21 +160,29 @@ const VideoUpload = ({ adminData }) => {
                             required
                           />
                         </div>
+
                         <div className="mb-4 w-full">
-                          {/* <label
-                            htmlFor="adminEmail"
-                            className="block text-[0.875rem] text-gray-100 mb-1 leading-[1.375rem]"
-                          >
-                            Admin Email:<sup className="text-pink-600">*</sup>
-                          </label>
-                          <input
-                            type="email"
-                            id="adminEmail"
-                            className="bg-slate-800 rounded-[0.75rem] w-full p-[12px] text-gray-400 cursor-not-allowed"
-                            value={adminEmail} // Corrected to use updated state
-                            readOnly // Prevents user from editing
-                          /> */}
                         </div>
+
+                        <div className="mb-6 w-full">
+  <label
+    htmlFor="thumbnailPic"
+    className="block text-[0.875rem] text-gray-100 mb-1 leading-[1.375rem]"
+  >
+    Select Thumbnail:
+    <sup className="text-pink-600">*</sup>
+  </label>
+  <input
+    type="file"
+    id="thumbnailPic"
+    className="bg-slate-800 rounded-[0.75rem] w-full p-[12px] text-gray-100"
+    accept="image/*"
+    onChange={handleThumbnailChange}
+    required
+  />
+</div>
+
+
                         <div className="mb-6 w-full">
                           <label
                             htmlFor="videoFile"
@@ -182,6 +200,9 @@ const VideoUpload = ({ adminData }) => {
                             required
                           />
                         </div>
+
+                        
+
                         <div className="flex items-center justify-between">
                           <button
                             className="bg-yellow-400 py-[8px] rounded-[8px] font-medium text-gray-950 w-1/2 mr-2"
