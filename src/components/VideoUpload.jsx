@@ -3,7 +3,7 @@ import { MdCloudUpload } from "react-icons/md";
 import FileUploadAnimation from "../assets/FileUploadAnimation";
 import "../assets/FileUploadAnimation.css";
 import Lottie from "lottie-react";
-import UploadSpinner from "../assets/VideoUploadSpinner.json"
+import UploadSpinner from "../assets/VideoUploadSpinner.json";
 
 const VideoUpload = ({ adminData }) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -13,7 +13,6 @@ const VideoUpload = ({ adminData }) => {
   const [videoFile, setVideoFile] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [thumbnailPic, setThumbnailPic] = useState(null);
-
 
   console.log("This is My admin dAta");
   console.log(adminData);
@@ -48,8 +47,7 @@ const VideoUpload = ({ adminData }) => {
 
   const handleThumbnailChange = (e) => {
     setThumbnailPic(e.target.files[0]);
-};
-
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -57,11 +55,10 @@ const VideoUpload = ({ adminData }) => {
     const formData = new FormData();
     formData.append("videoTitle", videoTitle);
     formData.append("description", description);
-    formData.append("adminEmail", adminData.email); 
+    formData.append("adminEmail", adminData.email);
     formData.append("videoFile", videoFile);
-    formData.append("adminPic",adminData.image);
+    formData.append("adminPic", adminData.image);
     formData.append("thumbnailPic", thumbnailPic); // Fix the key name
-
 
     setIsLoading(true);
 
@@ -82,12 +79,12 @@ const VideoUpload = ({ adminData }) => {
       }
     } catch (error) {
       console.error("Error uploading video:", error);
-    }finally{
+    } finally {
       setIsLoading(false);
     }
   };
 
-  return isLoading ? ( 
+  return isLoading ? (
     <div className="flex items-center justify-center h-screen">
       <Lottie animationData={UploadSpinner} className="h-44" />
     </div>
@@ -110,7 +107,10 @@ const VideoUpload = ({ adminData }) => {
       {modalVisible && (
         <div className="fixed z-10 inset-0 overflow-y-auto">
           <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-            <div className="fixed inset-0 transition-opacity" aria-hidden="true">
+            <div
+              className="fixed inset-0 transition-opacity"
+              aria-hidden="true"
+            >
               <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
             </div>
 
@@ -161,27 +161,25 @@ const VideoUpload = ({ adminData }) => {
                           />
                         </div>
 
-                        <div className="mb-4 w-full">
-                        </div>
+                        <div className="mb-4 w-full"></div>
 
                         <div className="mb-6 w-full">
-  <label
-    htmlFor="thumbnailPic"
-    className="block text-[0.875rem] text-gray-100 mb-1 leading-[1.375rem]"
-  >
-    Select Thumbnail:
-    <sup className="text-pink-600">*</sup>
-  </label>
-  <input
-    type="file"
-    id="thumbnailPic"
-    className="bg-slate-800 rounded-[0.75rem] w-full p-[12px] text-gray-100"
-    accept="image/*"
-    onChange={handleThumbnailChange}
-    required
-  />
-</div>
-
+                          <label
+                            htmlFor="thumbnailPic"
+                            className="block text-[0.875rem] text-gray-100 mb-1 leading-[1.375rem]"
+                          >
+                            Select Thumbnail:
+                            <sup className="text-pink-600">*</sup>
+                          </label>
+                          <input
+                            type="file"
+                            id="thumbnailPic"
+                            className="bg-slate-800 rounded-[0.75rem] w-full p-[12px] text-gray-100"
+                            accept="image/*"
+                            onChange={handleThumbnailChange}
+                            required
+                          />
+                        </div>
 
                         <div className="mb-6 w-full">
                           <label
@@ -200,8 +198,6 @@ const VideoUpload = ({ adminData }) => {
                             required
                           />
                         </div>
-
-                        
 
                         <div className="flex items-center justify-between">
                           <button
