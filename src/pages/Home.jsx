@@ -10,7 +10,7 @@ const Home = () => {
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/v1/auth/user/getAllVideo");
+        const response = await fetch("https://vtube-backend.onrender.com/api/v1/auth/user/getAllVideo");
         const data = await response.json();
 
         if (data.success) {

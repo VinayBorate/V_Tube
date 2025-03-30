@@ -64,7 +64,7 @@ const VideoUpload = ({ adminData }) => {
 
     try {
       const response = await fetch(
-        "http://localhost:3000/api/v1/auth/user/videoupload",
+        "https://vtube-backend.onrender.com/api/v1/auth/user/videoupload",
         {
           method: "POST",
           body: formData,

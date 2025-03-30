@@ -174,7 +174,7 @@ const Navbar = (props) => {
 
                         try {
                           await fetch(
-                            "http://localhost:3000/api/v1/auth/user/logout",
+                            "https://vtube-backend.onrender.com/api/v1/auth/user/logout",
                             {
                               method: "GET",
                               credentials: "include", // Ensures cookies are sent

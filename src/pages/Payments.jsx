@@ -22,7 +22,7 @@ const PaymentPage = () => {
     // Fetching plans from the API
     const fetchPlans = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/v1/auth/user/getAllPlans");
+        const response = await fetch("https://vtube-backend.onrender.com/api/v1/auth/user/getAllPlans");
         const data = await response.json();
         if (data.success) {
           setPlans(data.plans);
@@ -42,7 +42,7 @@ const PaymentPage = () => {
     if (!adminData) return alert("User not found");
 
     try {
-      const response = await fetch("http://localhost:3000/api/v1/auth/order", {
+      const response = await fetch("https://vtube-backend.onrender.com/api/v1/auth/order", {
         method: "POST",
         body: JSON.stringify({ amount, userId: adminData._id }),
         headers: { "Content-Type": "application/json" },
@@ -61,7 +61,7 @@ const PaymentPage = () => {
         description: "Test Transaction",
         order_id: order.order.id,
         handler: async function (response) {
-          const validateRes = await fetch("http://localhost:3000/api/v1/auth/validateOrder", {
+          const validateRes = await fetch("https://vtube-backend.onrender.com/api/v1/auth/validateOrder", {
             method: "POST",
             body: JSON.stringify({ ...response, userId: adminData._id, accountType }),
             headers: { "Content-Type": "application/json" },

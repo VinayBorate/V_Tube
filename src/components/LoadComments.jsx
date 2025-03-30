@@ -7,7 +7,7 @@ const LoadVideoComments = ({ videoId }) => {
     const fetchComments = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/api/v1/auth/video/${videoId}/comments`
+          `https://vtube-backend.onrender.com/api/v1/auth/video/${videoId}/comments`
         );
         const data = await response.json();
         setComments(data.comments);

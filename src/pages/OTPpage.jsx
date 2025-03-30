@@ -60,7 +60,7 @@ const OTPpage = ({ setisLogin }) => {
         setIsLoading(true);
 
         try {
-            const response = await fetch('http://localhost:3000/api/v1/auth/user/signup', {
+            const response = await fetch('https://vtube-backend.onrender.com/api/v1/auth/user/signup', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ ...formData, otp: enteredOtp })
@@ -75,7 +75,7 @@ const OTPpage = ({ setisLogin }) => {
 
                 setTimeout(async () => {
                     try {
-                        await fetch("http://localhost:3000/api/v1/auth/user/logout", {
+                        await fetch("https://vtube-backend.onrender.com/api/v1/auth/user/logout", {
                             method: "GET",
                             credentials: "include",
                         });

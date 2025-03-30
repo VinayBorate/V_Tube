@@ -40,7 +40,7 @@ const SignupForm = ({ setisLogin ,setIsLoading}) => {
     setIsLoading(true); // show the loader while Processing
 
     try {
-      const otpResponse = await fetch('http://localhost:3000/api/v1/auth/user/sendOTP', {
+      const otpResponse = await fetch('https://vtube-backend.onrender.com/api/v1/auth/user/sendOTP', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

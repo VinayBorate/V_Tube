@@ -25,7 +25,7 @@ const ViewVideo = () => {
       setIsLoading(true); // Ensure loading state resets on new video fetch
       try {
         const response = await fetch(
-          `http://localhost:3000/api/v1/auth/user/getVideo/${videoId}`
+          `https://vtube-backend.onrender.com/api/v1/auth/user/getVideo/${videoId}`
         );
         const data = await response.json();
         if (data.success) {
@@ -47,7 +47,7 @@ const ViewVideo = () => {
     const fetchVideos = async () => {
       try {
         const response = await fetch(
-          "http://localhost:3000/api/v1/auth/user/getAllVideo"
+          "https://vtube-backend.onrender.com/api/v1/auth/user/getAllVideo"
         );
         const data = await response.json();
         if (data.success) {
@@ -67,7 +67,7 @@ const ViewVideo = () => {
 
   //   try {
   //     const response = await fetch(
-  //       `http://localhost:3000/api/v1/auth/video/${videoId}/comment`,
+  //       `https://vtube-backend.onrender.com/api/v1/auth/video/${videoId}/comment`,
   //       {
   //         method: "POST",
   //         headers: {
@@ -102,7 +102,7 @@ const handleCommentSubmit = async () => {
 
   try {
     const response = await fetch(
-      `http://localhost:3000/api/v1/auth/video/${videoId}/comment`,
+      `https://vtube-backend.onrender.com/api/v1/auth/video/${videoId}/comment`,
       {
         method: "POST",
         headers: {
