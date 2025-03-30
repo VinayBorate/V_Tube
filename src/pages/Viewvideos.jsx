@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import defaultThumbnail from "../assets/defaultThumbnailVideoImg.jpg";
+import LoadComments from "../components/LoadComments";
 
 const ViewVideo = () => {
   const { videoId } = useParams();
@@ -8,6 +9,16 @@ const ViewVideo = () => {
   const [video, setVideo] = useState(null);
   const [videos, setVideos] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [commentText, setCommentText] = useState(""); // State to hold comment
+  const [isSubmitting, setIsSubmitting] = useState(false); // State to disable button when submitting
+  const [commentTrigger, setCommentTrigger] = useState(false); //when is changes the Comments section rerenders
+
+    // *******Getting the data of the user *************
+    const storedUser = localStorage.getItem("userDetail"); // Get stored user data as a string
+    //  console.log("User Data At ViewVideoPage",storedUser);
+    const userData = JSON.parse(storedUser);
+    console.log(userData);
+ 
 
   useEffect(() => {
     const fetchVideo = async () => {
@@ -50,6 +61,77 @@ const ViewVideo = () => {
     fetchVideos();
   }, []);
 
+  // const handleCommentSubmit = async () => {
+  //   if (!commentText.trim()) return; // Prevent empty comments
+  //   setIsSubmitting(true);
+
+  //   try {
+  //     const response = await fetch(
+  //       `http://localhost:3000/api/v1/auth/video/${videoId}/comment`,
+  //       {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify({
+  //           text: commentText,
+  //           user: userData._id, // Replace with actual user ID from authentication
+  //         }),
+  //       }
+  //     );
+
+  //     const data = await response.json();
+
+  //     if (response.ok) {
+  //       alert("Comment added successfully!");
+  //       setCommentText(""); // Clear input
+  //     } else {
+  //       alert(`Error: ${data.error}`);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error adding comment:", error);
+  //   } finally {
+  //     setIsSubmitting(false);
+  //   }
+  // };
+
+  
+const handleCommentSubmit = async () => {
+  if (!commentText.trim()) return; // Prevent empty comments
+  setIsSubmitting(true);
+
+  try {
+    const response = await fetch(
+      `http://localhost:3000/api/v1/auth/video/${videoId}/comment`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          text: commentText,
+          user: userData._id, // Replace with actual user ID from authentication
+        }),
+      }
+    );
+
+    const data = await response.json();
+
+    if (response.ok) {
+      alert("Comment added successfully!");
+      setCommentText(""); // Clear input
+      setCommentTrigger((prev) => !prev); // Toggle trigger to refresh comments
+    } else {
+      alert(`Error: ${data.error}`);
+    }
+  } catch (error) {
+    console.error("Error adding comment:", error);
+  } finally {
+    setIsSubmitting(false);
+  }
+};
+
+
   if (isLoading) {
     return <div className="text-center p-5">Loading...</div>;
   }
@@ -78,7 +160,46 @@ const ViewVideo = () => {
               {video.videoTitle}
             </h1>
             <p className="text-gray-400 mb-4">{video.description}</p>
-            <div className="w-full h-1 bg-gray-300"></div>
+            <div className="w-full h-1 bg-gray-600 mb-4"></div>
+
+            {/* Comments Form*/}
+
+            <div className="flex items-center p-3 rounded-lg w-full max-w-lg">
+              <img
+                src="your-profile-image.jpg"
+                alt="User"
+                className="w-8 h-8 rounded-full mr-3"
+              />
+              <div className="flex-1 border-b border-gray-600">
+                <input
+                  type="text"
+                  placeholder="Add a comment..."
+                  value={commentText}
+                  onChange={(e) => setCommentText(e.target.value)}
+                  className="w-full bg-transparent text-white placeholder-gray-400 border-none focus:ring-0 outline-none pb-1"
+                />
+              </div>
+              <button
+                className="text-gray-400 hover:text-white ml-3"
+                onClick={() => setCommentText("")}
+              >
+                Cancel
+              </button>
+              <button
+                className={`bg-gray-600 text-white px-3 py-1 rounded-lg ml-2 ${
+                  isSubmitting
+                    ? "cursor-not-allowed opacity-50"
+                    : "hover:bg-gray-500"
+                }`}
+                onClick={handleCommentSubmit}
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? "Posting..." : "Comment"}
+              </button>
+            </div>
+
+            {/* This are My comments  */}
+            <LoadComments key={commentTrigger} videoId={videoId} />
           </>
         )}
       </div>
