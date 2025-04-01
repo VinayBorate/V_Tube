@@ -7,6 +7,8 @@ import { FaRegUser } from "react-icons/fa";
 import { ToastContainer, toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+
 const Navbar = (props) => {
   let isLogin = props.isLogin;
   let setisLogin = props.setisLogin;
@@ -174,7 +176,7 @@ const Navbar = (props) => {
 
                         try {
                           await fetch(
-                            "https://vtube-backend.onrender.com/api/v1/auth/user/logout",
+                            `${BASE_URL}/api/v1/auth/user/logout`,
                             {
                               method: "GET",
                               credentials: "include", // Ensures cookies are sent

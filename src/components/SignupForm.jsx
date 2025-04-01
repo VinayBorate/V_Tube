@@ -3,6 +3,8 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+
 
 const SignupForm = ({ setisLogin ,setIsLoading}) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -40,7 +42,7 @@ const SignupForm = ({ setisLogin ,setIsLoading}) => {
     setIsLoading(true); // show the loader while Processing
 
     try {
-      const otpResponse = await fetch('https://vtube-backend.onrender.com/api/v1/auth/user/sendOTP', {
+      const otpResponse = await fetch(`${BASE_URL}/api/v1/auth/user/sendOTP`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

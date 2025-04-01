@@ -3,6 +3,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import defaultThumbnail from "../assets/defaultThumbnailVideoImg.jpg";
 import LoadComments from "../components/LoadComments";
 
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+
 const ViewVideo = () => {
   const { videoId } = useParams();
   const navigate = useNavigate();
@@ -13,19 +15,18 @@ const ViewVideo = () => {
   const [isSubmitting, setIsSubmitting] = useState(false); // State to disable button when submitting
   const [commentTrigger, setCommentTrigger] = useState(false); //when is changes the Comments section rerenders
 
-    // *******Getting the data of the user *************
-    const storedUser = localStorage.getItem("userDetail"); // Get stored user data as a string
-    //  console.log("User Data At ViewVideoPage",storedUser);
-    const userData = JSON.parse(storedUser);
-    console.log(userData);
- 
+  // *******Getting the data of the user *************
+  const storedUser = localStorage.getItem("userDetail"); // Get stored user data as a string
+  //  console.log("User Data At ViewVideoPage",storedUser);
+  const userData = JSON.parse(storedUser);
+  console.log(userData);
 
   useEffect(() => {
     const fetchVideo = async () => {
       setIsLoading(true); // Ensure loading state resets on new video fetch
       try {
         const response = await fetch(
-          `https://vtube-backend.onrender.com/api/v1/auth/user/getVideo/${videoId}`
+          `${BASE_URL}/api/v1/auth/user/getVideo/${videoId}`
         );
         const data = await response.json();
         if (data.success) {
@@ -47,7 +48,7 @@ const ViewVideo = () => {
     const fetchVideos = async () => {
       try {
         const response = await fetch(
-          "https://vtube-backend.onrender.com/api/v1/auth/user/getAllVideo"
+          `${BASE_URL}/api/v1/auth/user/getAllVideo`
         );
         const data = await response.json();
         if (data.success) {
@@ -61,76 +62,40 @@ const ViewVideo = () => {
     fetchVideos();
   }, []);
 
-  // const handleCommentSubmit = async () => {
-  //   if (!commentText.trim()) return; // Prevent empty comments
-  //   setIsSubmitting(true);
+  const handleCommentSubmit = async () => {
+    if (!commentText.trim()) return; // Prevent empty comments
+    setIsSubmitting(true);
 
-  //   try {
-  //     const response = await fetch(
-  //       `https://vtube-backend.onrender.com/api/v1/auth/video/${videoId}/comment`,
-  //       {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         body: JSON.stringify({
-  //           text: commentText,
-  //           user: userData._id, // Replace with actual user ID from authentication
-  //         }),
-  //       }
-  //     );
+    try {
+      const response = await fetch(
+        `${BASE_URL}/api/v1/auth/video/${videoId}/comment`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            text: commentText,
+            user: userData._id, // Replace with actual user ID from authentication
+          }),
+        }
+      );
 
-  //     const data = await response.json();
+      const data = await response.json();
 
-  //     if (response.ok) {
-  //       alert("Comment added successfully!");
-  //       setCommentText(""); // Clear input
-  //     } else {
-  //       alert(`Error: ${data.error}`);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error adding comment:", error);
-  //   } finally {
-  //     setIsSubmitting(false);
-  //   }
-  // };
-
-  
-const handleCommentSubmit = async () => {
-  if (!commentText.trim()) return; // Prevent empty comments
-  setIsSubmitting(true);
-
-  try {
-    const response = await fetch(
-      `https://vtube-backend.onrender.com/api/v1/auth/video/${videoId}/comment`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          text: commentText,
-          user: userData._id, // Replace with actual user ID from authentication
-        }),
+      if (response.ok) {
+        alert("Comment added successfully!");
+        setCommentText(""); // Clear input
+        setCommentTrigger((prev) => !prev); // Toggle trigger to refresh comments
+      } else {
+        alert(`Error: ${data.error}`);
       }
-    );
-
-    const data = await response.json();
-
-    if (response.ok) {
-      alert("Comment added successfully!");
-      setCommentText(""); // Clear input
-      setCommentTrigger((prev) => !prev); // Toggle trigger to refresh comments
-    } else {
-      alert(`Error: ${data.error}`);
+    } catch (error) {
+      console.error("Error adding comment:", error);
+    } finally {
+      setIsSubmitting(false);
     }
-  } catch (error) {
-    console.error("Error adding comment:", error);
-  } finally {
-    setIsSubmitting(false);
-  }
-};
-
+  };
 
   if (isLoading) {
     return <div className="text-center p-5">Loading...</div>;
@@ -143,7 +108,14 @@ const handleCommentSubmit = async () => {
         {video && (
           <>
             {/* Video Display */}
-            <video controls className="w-full rounded-lg">
+            <video
+              controls
+              className="w-full rounded-lg max-h-screen" // Added max-h-screen to limit height
+              style={{
+                objectFit: "contain", // Ensures the entire video is visible without cropping
+                margin: "0 auto", // Centers the video horizontally
+              }}
+            >
               <source src={video.videoURL} type="video/mp4" />
             </video>
 
@@ -166,7 +138,7 @@ const handleCommentSubmit = async () => {
 
             <div className="flex items-center p-3 rounded-lg w-full max-w-lg">
               <img
-                src="your-profile-image.jpg"
+                src={userData.image}
                 alt="User"
                 className="w-8 h-8 rounded-full mr-3"
               />

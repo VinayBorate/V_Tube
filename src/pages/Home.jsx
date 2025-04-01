@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import defaultThumbnail from "../assets/defaultThumbnailVideoImg.jpg";
 
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+
 const Home = () => {
   const [videos, setVideos] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -10,7 +12,7 @@ const Home = () => {
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const response = await fetch("https://vtube-backend.onrender.com/api/v1/auth/user/getAllVideo");
+        const response = await fetch(`${BASE_URL}/api/v1/auth/user/getAllVideo`);
         const data = await response.json();
 
         if (data.success) {
@@ -44,7 +46,7 @@ const Home = () => {
             <img
               src={video.thumbnailURL || defaultThumbnail}
               alt={video.videoTitle}
-              className="w-full h-48 object-cover"
+              className="w-full h-48 object-contain"
             />
           </div>
 

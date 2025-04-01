@@ -4,6 +4,8 @@ import { toast } from 'react-toastify';
 import Lottie from "lottie-react";
 import Spinner from "../assets/LoderSpin.json";
 
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+
 const OTPpage = ({ setisLogin }) => {
     const [otp, setOtp] = useState(['', '', '', '', '', '']);
     const inputRefs = useRef([]);
@@ -60,7 +62,7 @@ const OTPpage = ({ setisLogin }) => {
         setIsLoading(true);
 
         try {
-            const response = await fetch('https://vtube-backend.onrender.com/api/v1/auth/user/signup', {
+            const response = await fetch(`${BASE_URL}/api/v1/auth/user/signup`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ ...formData, otp: enteredOtp })
@@ -75,7 +77,7 @@ const OTPpage = ({ setisLogin }) => {
 
                 setTimeout(async () => {
                     try {
-                        await fetch("https://vtube-backend.onrender.com/api/v1/auth/user/logout", {
+                        await fetch(`${BASE_URL}/api/v1/auth/user/logout`, {
                             method: "GET",
                             credentials: "include",
                         });

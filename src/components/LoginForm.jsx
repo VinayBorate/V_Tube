@@ -3,6 +3,8 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+
 export const LoginForm = ({setisLogin}) => {
 
     // helps to navigate from one page to another page
@@ -38,7 +40,7 @@ export const LoginForm = ({setisLogin}) => {
         event.preventDefault(); // Prevents page reload
         console.log(formData)
         try {
-            const response = await fetch('https://vtube-backend.onrender.com/api/v1/auth/user/login', {
+            const response = await fetch(`${BASE_URL}/api/v1/auth/user/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

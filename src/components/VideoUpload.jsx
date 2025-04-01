@@ -5,6 +5,8 @@ import "../assets/FileUploadAnimation.css";
 import Lottie from "lottie-react";
 import UploadSpinner from "../assets/VideoUploadSpinner.json";
 
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+
 const VideoUpload = ({ adminData }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [videoTitle, setVideoTitle] = useState("");
@@ -64,7 +66,7 @@ const VideoUpload = ({ adminData }) => {
 
     try {
       const response = await fetch(
-        "https://vtube-backend.onrender.com/api/v1/auth/user/videoupload",
+        `${BASE_URL}/api/v1/auth/user/videoupload`,
         {
           method: "POST",
           body: formData,
