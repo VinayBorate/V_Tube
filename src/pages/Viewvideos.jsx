@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import defaultThumbnail from "../assets/defaultThumbnailVideoImg.jpg";
 import LoadComments from "../components/LoadComments";
+import Lottie from "lottie-react";
+import Spinner from "../assets/LoderSpin.json";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -98,7 +100,11 @@ const ViewVideo = () => {
   };
 
   if (isLoading) {
-    return <div className="text-center p-5">Loading...</div>;
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <Lottie animationData={Spinner} className="h-44" />
+      </div>
+    );
   }
 
   return (
@@ -135,40 +141,41 @@ const ViewVideo = () => {
             <div className="w-full h-1 bg-gray-600 mb-4"></div>
 
             {/* Comments Form*/}
-
-            <div className="flex items-center p-3 rounded-lg w-full max-w-lg">
-              <img
-                src={userData.image}
-                alt="User"
-                className="w-8 h-8 rounded-full mr-3"
-              />
-              <div className="flex-1 border-b border-gray-600">
-                <input
-                  type="text"
-                  placeholder="Add a comment..."
-                  value={commentText}
-                  onChange={(e) => setCommentText(e.target.value)}
-                  className="w-full bg-transparent text-white placeholder-gray-400 border-none focus:ring-0 outline-none pb-1"
+            {userData && (
+              <div className="flex items-center p-3 rounded-lg w-full max-w-lg">
+                <img
+                  src={userData.image}
+                  alt="User"
+                  className="w-8 h-8 rounded-full mr-3"
                 />
+                <div className="flex-1 border-b border-gray-600">
+                  <input
+                    type="text"
+                    placeholder="Add a comment..."
+                    value={commentText}
+                    onChange={(e) => setCommentText(e.target.value)}
+                    className="w-full bg-transparent text-white placeholder-gray-400 border-none focus:ring-0 outline-none pb-1"
+                  />
+                </div>
+                <button
+                  className="text-gray-400 hover:text-white ml-3"
+                  onClick={() => setCommentText("")}
+                >
+                  Cancel
+                </button>
+                <button
+                  className={`bg-gray-600 text-white px-3 py-1 rounded-lg ml-2 ${
+                    isSubmitting
+                      ? "cursor-not-allowed opacity-50"
+                      : "hover:bg-gray-500"
+                  }`}
+                  onClick={handleCommentSubmit}
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? "Posting..." : "Comment"}
+                </button>
               </div>
-              <button
-                className="text-gray-400 hover:text-white ml-3"
-                onClick={() => setCommentText("")}
-              >
-                Cancel
-              </button>
-              <button
-                className={`bg-gray-600 text-white px-3 py-1 rounded-lg ml-2 ${
-                  isSubmitting
-                    ? "cursor-not-allowed opacity-50"
-                    : "hover:bg-gray-500"
-                }`}
-                onClick={handleCommentSubmit}
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? "Posting..." : "Comment"}
-              </button>
-            </div>
+            )}
 
             {/* This are My comments  */}
             <LoadComments key={commentTrigger} videoId={videoId} />
