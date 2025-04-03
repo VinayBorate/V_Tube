@@ -4,6 +4,7 @@ import defaultThumbnail from "../assets/defaultThumbnailVideoImg.jpg";
 import LoadComments from "../components/LoadComments";
 import Lottie from "lottie-react";
 import Spinner from "../assets/LoderSpin.json";
+import LikeButton from "../components/LikeButton";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -133,6 +134,10 @@ const ViewVideo = () => {
                 className="w-full h-full object-cover"
               />
             </div>
+
+            {userData && (
+              <LikeButton videoId={video._id} userId={userData._id}/>
+            )}
 
             <h1 className="text-xl font-semibold text-white mt-3">
               {video.videoTitle}
