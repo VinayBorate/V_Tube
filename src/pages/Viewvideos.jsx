@@ -5,6 +5,7 @@ import LoadComments from "../components/LoadComments";
 import Lottie from "lottie-react";
 import Spinner from "../assets/LoderSpin.json";
 import LikeButton from "../components/LikeButton";
+import VideoPlayer from "../components/VideoPlayer";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -115,7 +116,8 @@ const ViewVideo = () => {
         {video && (
           <>
             {/* Video Display */}
-            <video
+
+            {/* <video
               controls
               className="w-full rounded-lg max-h-screen" // Added max-h-screen to limit height
               style={{
@@ -124,7 +126,8 @@ const ViewVideo = () => {
               }}
             >
               <source src={video.videoURL} type="video/mp4" />
-            </video>
+            </video> */}
+            <VideoPlayer videoURL={video.videoURL} userData={userData}/>
 
             {/* chanel Pic */}
             <div className="w-8 h-8 rounded-full overflow-hidden bg-gray-200">
