@@ -117,16 +117,6 @@ const ViewVideo = () => {
           <>
             {/* Video Display */}
 
-            {/* <video
-              controls
-              className="w-full rounded-lg max-h-screen" // Added max-h-screen to limit height
-              style={{
-                objectFit: "contain", // Ensures the entire video is visible without cropping
-                margin: "0 auto", // Centers the video horizontally
-              }}
-            >
-              <source src={video.videoURL} type="video/mp4" />
-            </video> */}
             <VideoPlayer videoURL={video.videoURL} userData={userData}/>
 
             {/* chanel Pic */}

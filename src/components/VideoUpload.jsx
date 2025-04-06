@@ -4,6 +4,7 @@ import FileUploadAnimation from "../assets/FileUploadAnimation";
 import "../assets/FileUploadAnimation.css";
 import Lottie from "lottie-react";
 import UploadSpinner from "../assets/VideoUploadSpinner.json";
+import { useNavigate } from "react-router";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -15,19 +16,18 @@ const VideoUpload = ({ adminData }) => {
   const [videoFile, setVideoFile] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [thumbnailPic, setThumbnailPic] = useState(null);
+  const navigate = useNavigate();
+
 
   console.log("This is My admin dAta");
   console.log(adminData);
 
-  // Update adminEmail once adminData is available
-  // useEffect(() => {
-  //   if (adminData?.email) {
-  //     setAdminEmail(adminData.email);
-  //   }
-  // }, [adminData]); // Runs whenever adminData updates
-
   const openModal = () => {
-    setModalVisible(true);
+    if (adminData?.accountType === "gold") {
+      setModalVisible(true);
+    } else {
+      navigate("/payment");
+    }
   };
 
   const closeModal = () => {
@@ -65,13 +65,10 @@ const VideoUpload = ({ adminData }) => {
     setIsLoading(true);
 
     try {
-      const response = await fetch(
-        `${BASE_URL}/api/v1/auth/user/videoupload`,
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
+      const response = await fetch(`${BASE_URL}/api/v1/auth/user/videoupload`, {
+        method: "POST",
+        body: formData,
+      });
 
       if (response.ok) {
         console.log("Video uploaded successfully!");
@@ -100,7 +97,14 @@ const VideoUpload = ({ adminData }) => {
           </div>
           <div className="back-side cover"></div>
         </div>
-        <label className="custom-file-upload" onClick={openModal}>
+        <label
+          className="custom-file-upload"
+          onClick={() =>
+            adminData?.accountType === "gold"
+              ? openModal()
+              : navigate("/payment")
+          }
+        >
           <input className="title" />
           Upload a file
         </label>

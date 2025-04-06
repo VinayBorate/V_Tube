@@ -39,43 +39,44 @@ const Home = () => {
       <Lottie animationData={Spinner} className="h-44" />
     </div>
   ) : (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4">
-      {videos.map((video) => (
-        <div
-          key={video._id}
-          className="rounded-lg shadow-md overflow-hidden bg-slate-900 sm:h-96 cursor-pointer"
-          onClick={() => navigate(`/video/${video._id}`)}
-        >
-          <div className="relative">
-            <img
-              src={video.thumbnailURL || defaultThumbnail}
-              alt={video.videoTitle}
-              className="w-full h-48 object-contain"
-            />
-          </div>
+<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4">
+  {videos.map((video) => (
+    <div
+      key={video._id}
+      className="bg-gray-800 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer"
+      onClick={() => navigate(`/video/${video._id}`)}
+    >
+      {/* Thumbnail */}
+      <img
+        src={video.thumbnailURL || defaultThumbnail}
+        alt={video.videoTitle}
+        className="w-full h-52 object-cover"
+      />
 
-          <div className="p-4">
-            <h3 className="text-lg font-semibold text-gray-50">
-              {video.videoTitle}
-            </h3>
-            <p className="text-sm text-gray-500">{video.description}</p>
-            <div className="flex items-center mt-2 gap-4">
-              <div className="w-8 h-8 rounded-full overflow-hidden bg-gray-200">
-                <img
-                  src={video.adminPic || defaultThumbnail}
-                  alt="Admin"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div>
-                <p className="text-xs text-gray-300">{video.adminEmail}</p>
-                <p className="text-xs text-gray-500">10K views • 1 day ago</p>
-              </div>
-            </div>
+      {/* Video Details */}
+      <div className="p-4">
+        <h3 className="text-sm font-semibold text-white">
+          {video.videoTitle}
+        </h3>
+        <p className="text-xs text-gray-400">{video.description}</p>
+
+        <div className="flex items-center gap-2 mt-3">
+          {/* Admin Profile Picture */}
+          <img
+            src={video.adminPic || defaultThumbnail}
+            alt="Admin"
+            className="w-8 h-8 rounded-full object-cover"
+          />
+          <div>
+            <p className="text-xs text-gray-400">{video.adminEmail}</p>
+            <p className="text-xs text-gray-500">10K views • 1 day ago</p>
           </div>
         </div>
-      ))}
+      </div>
     </div>
+  ))}
+</div>
+
   );
 };
 
